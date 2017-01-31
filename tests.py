@@ -23,5 +23,12 @@ class TestWpVitalsTender(unittest.TestCase):
         self.assertEqual("DGA", result[5]["history"])
         self.assertEqual(None, result[11]["history"])
 
+    def test_current_assessment(self):
+        # As this queries a real Wikipedia article, this test may need to be updated if the page improves.
+        article_title = "Mummy Cave"
+        article_quality = "GA"
+        result = wpvt.current_assessment(article_title)
+        self.assertEqual(article_quality, result)
+
 if __name__ == '__main__':
     unittest.main()

@@ -5,6 +5,7 @@ def article_list_assessment_check(article_title):
     #TO DO!
     return article_title + "pezoo!"
 
+
 def parse_article(content):
     article_listing_regex = re.compile(r'\* (?P<assessment>\{\{[Ii]con\|\w+\}\})\s*(?P<history>\{\{[Ii]con\|\w+\}\})*\s*\'*\[\[(?P<title>[\w\d\s|]+)\]\]')
     results = []
@@ -17,6 +18,10 @@ def parse_article(content):
             article["history"] = l.group("history").split("|")[-1][:-2]
         results.append(article)
     return results
+
+
+def current_assessment(article_title):
+    pass
 
 
 def main():
