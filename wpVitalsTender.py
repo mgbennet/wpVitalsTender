@@ -27,8 +27,9 @@ def current_assessment(article_title):
     pages = resp.json()["query"]["pages"]
     for p_key, p_val in pages.items():
         assessments = [proj_val["class"] for proj_key, proj_val in p_val["pageassessments"].items()]
-        return(assessments[0])
-    pass
+        common_assessment = max(set(assessments), key=assessments.count)
+        return common_assessment
+    return None
 
 
 def main():
