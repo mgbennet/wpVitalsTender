@@ -8,6 +8,14 @@ def article_list_assessment_check(article_title):
     return article_title + "pezoo!"
 
 
+def get_content(article_title):
+    resp = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + article_title + "&prop=revisions&rvprop=content&format=json")
+    pages = resp.json()["query"]["pages"]
+    for p_key, p_val in pages.items():
+        return p_val["revisions"][0]["*"]
+    return None
+
+
 def parse_article(content):
     article_listing_regex = re.compile(r'\* (?P<assessment>\{\{[Ii]con\|\w+\}\})\s*(?P<history>\{\{[Ii]con\|\w+\}\})*\s*\'*\[\[(?P<title>[\w\d\s|]+)\]\]')
     results = []
