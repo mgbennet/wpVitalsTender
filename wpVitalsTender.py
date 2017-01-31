@@ -4,8 +4,17 @@ import requests
 
 
 def article_list_assessment_check(article_title):
-    #TO DO!
-    return article_title + "pezoo!"
+    content = get_content(article_title)
+    listings = parse_article(content)
+    mismatches = []
+    print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
+    for l in listings:
+        assessments = current_assessment(l["title"])
+        if not l["assessment"] in assessments:
+            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": assessments})
+            print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(assessments))
+    print(str(len(mismatches)) + " mismatches found.")
+    return mismatches
 
 
 def get_content(article_title):
@@ -17,7 +26,13 @@ def get_content(article_title):
 
 
 def parse_article(content):
-    article_listing_regex = re.compile(r'\* (?P<assessment>\{\{[Ii]con\|\w+\}\})\s*(?P<history>\{\{[Ii]con\|\w+\}\})*\s*\'*\[\[(?P<title>[\w\d\s|]+)\]\]')
+    article_listing_regex = re.compile(r'''
+        [\*#]\s*                                        # line starts with a bullet or a number
+        (?P<assessment>\{\{[Ii]con\|\w+\}\})            # assessment should always be first
+        (?P<history>\s*\{\{[Ii]con\|\w+\}\})*           # option of multiple icons for FFA, or DGA
+        \s*
+        \'*\[\[(?P<title>[^#<>\[\]\{\}]+)\]\]                # actual title is a wikilink
+    ''', re.VERBOSE)
     results = []
     for l in article_listing_regex.finditer(content):
         article = {}
@@ -30,13 +45,16 @@ def parse_article(content):
     return results
 
 
-def current_assessment(article_title):
+def current_assessment(article_title, most_common=False):
     resp = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + article_title + "&prop=pageassessments&format=json")
     pages = resp.json()["query"]["pages"]
     for p_key, p_val in pages.items():
         assessments = [proj_val["class"] for proj_key, proj_val in p_val["pageassessments"].items()]
-        common_assessment = max(set(assessments), key=assessments.count)
-        return common_assessment
+        if most_common:
+            common_assessment = max(set(assessments), key=assessments.count)
+            return common_assessment
+        else:
+            return assessments
     return None
 
 
@@ -45,7 +63,7 @@ def main():
     if len(args):
         article_title = args[0]
     else:
-        article_title = "Wikipedia:Vital articles"
+        article_title = "Wikipedia:Vital articles/Level/2"
     article_list_assessment_check(article_title)
 
 
