@@ -1,4 +1,6 @@
-import sys, re
+import sys
+import re
+import requests
 
 
 def article_list_assessment_check(article_title):
@@ -21,6 +23,11 @@ def parse_article(content):
 
 
 def current_assessment(article_title):
+    resp = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + article_title + "&prop=pageassessments&format=json")
+    pages = resp.json()["query"]["pages"]
+    for p_key, p_val in pages.items():
+        assessments = [proj_val["class"] for proj_key, proj_val in p_val["pageassessments"].items()]
+        return(assessments[0])
     pass
 
 
