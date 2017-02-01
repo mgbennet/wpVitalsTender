@@ -3,8 +3,8 @@ import re
 import requests
 
 
-def article_list_assessment_check(article_title):
-    content = get_content(article_title)
+def article_list_assessment_check(article_title, section=None):
+    content = get_content(article_title, section)
     listings = parse_article(content)
     mismatches = []
     print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
@@ -17,8 +17,18 @@ def article_list_assessment_check(article_title):
     return mismatches
 
 
-def get_content(article_title):
-    resp = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + article_title + "&prop=revisions&rvprop=content&format=json")
+def get_content(article_title, section=None):
+    baseurl = "https://en.wikipedia.org/w/api.php"
+    query_attrs = {
+        "action": "query",
+        "titles": article_title,
+        "prop": "revisions",
+        "rvprop": "content",
+        "format": "json"
+    }
+    if section:
+        query_attrs["rvsection"] = section
+    resp = requests.get(baseurl, query_attrs)
     pages = resp.json()["query"]["pages"]
     for p_key, p_val in pages.items():
         return p_val["revisions"][0]["*"]
@@ -31,7 +41,7 @@ def parse_article(content):
         (?P<assessment>\{\{[Ii]con\|\w+\}\})            # assessment should always be first
         (?P<history>\s*\{\{[Ii]con\|\w+\}\})*           # option of multiple icons for FFA, or DGA
         \s*
-        \'*\[\[(?P<title>[^#<>\[\]\{\}]+)\]\]                # actual title is a wikilink
+        \'*\[\[(?P<title>[^#<>\[\]\{\}]+)\]\]           # actual title is a wikilink
     ''', re.VERBOSE)
     results = []
     for l in article_listing_regex.finditer(content):
@@ -45,26 +55,31 @@ def parse_article(content):
     return results
 
 
-def current_assessment(article_title, most_common=False):
-    resp = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + article_title + "&prop=pageassessments&format=json")
+def current_assessment(article_title):
+    baseurl = "https://en.wikipedia.org/w/api.php"
+    query_attrs = {
+        "action": "query",
+        "titles": article_title,
+        "prop": "pageassessments",
+        "format": "json"
+    }
+    resp = requests.get(baseurl, query_attrs)
     pages = resp.json()["query"]["pages"]
     for p_key, p_val in pages.items():
         assessments = [proj_val["class"] for proj_key, proj_val in p_val["pageassessments"].items()]
-        if most_common:
-            common_assessment = max(set(assessments), key=assessments.count)
-            return common_assessment
-        else:
-            return assessments
+        return assessments
     return None
 
 
 def main():
     args = sys.argv[1:]
+    article_title = "Wikipedia:Vital articles/Level/1"
+    section = None
     if len(args):
         article_title = args[0]
-    else:
-        article_title = "Wikipedia:Vital articles/Level/2"
-    article_list_assessment_check(article_title)
+        if len(args) > 1:
+            section = args[1]
+    article_list_assessment_check(article_title, section)
 
 
 if __name__ == "__main__":
