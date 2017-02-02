@@ -4,6 +4,13 @@ import requests
 
 
 def article_list_assessment_check(article_title, section=None):
+    """Given a wikipdia page listing articles, compares listed article
+    quality assessments to actual current assessment.
+    :param article_title: Wikipedia page containing a list of articles and their assessments
+    :param section: optional sub section of above page.
+    :return: List containing all mismatched articles.
+    """
+
     content = get_content(article_title, section)
     listings = parse_article(content)
     mismatches = []
@@ -18,6 +25,7 @@ def article_list_assessment_check(article_title, section=None):
 
 
 def get_content(article_title, section=None):
+    """Returns the content of a wikipedia article, or optional section of an article."""
     baseurl = "https://en.wikipedia.org/w/api.php"
     query_attrs = {
         "action": "query",
@@ -36,6 +44,12 @@ def get_content(article_title, section=None):
 
 
 def parse_article(content):
+    """Finds all article links with an icon indicating assessed quality in a wikipedia page.
+    Matches the following style:
+    [1.|*] {{icon|FA}} {{Icon|FGA}} [[Article title]]
+    :param content: The content to be parsed
+    :return: List of dicts of style: {title: "article_title", assessment: "Stub|C|B|A|etc.", history: None|"FFA|FGA"}
+    """
     article_listing_regex = re.compile(r'''
         [\*#]\s*                                        # line starts with a bullet or a number
         (?P<assessment>\{\{[Ii]con\|\w+\}\})            # assessment should always be first
@@ -56,6 +70,7 @@ def parse_article(content):
 
 
 def current_assessment(article_title):
+    """Retrieves current assessment of Wikipedia article."""
     baseurl = "https://en.wikipedia.org/w/api.php"
     query_attrs = {
         "action": "query",
