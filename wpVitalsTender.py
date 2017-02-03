@@ -1,3 +1,14 @@
+"""
+wpVitalsTender
+
+A tool for helping to maintain lists of Wikipedia articles.
+https://en.wikipedia.org/wiki/Wikipedia:Vital_articles is a list of 1000 articles and
+their corresponding assessed quality. However these listings can go out of date as
+articles improve or deteriorate. This script uses the Wikipedia API to automatically
+detect mismatches between an article's listed and actual assessed quality.
+"""
+
+
 import sys
 import re
 import requests
@@ -25,7 +36,7 @@ def article_list_assessment_check(article_title, section=None):
 
 
 def get_content(article_title, section=None):
-    """Returns the content of a wikipedia article, or optional section of an article."""
+    """Returns the content of a Wikipedia article, or optional section of an article."""
     baseurl = "https://en.wikipedia.org/w/api.php"
     query_attrs = {
         "action": "query",
@@ -47,6 +58,7 @@ def parse_article(content):
     """Finds all article links with an icon indicating assessed quality in a wikipedia page.
     Matches the following style:
     [1.|*] {{icon|FA}} {{Icon|FGA}} [[Article title]]
+
     :param content: The content to be parsed
     :return: List of dicts of style: {title: "article_title", assessment: "Stub|C|B|A|etc.", history: None|"FFA|FGA"}
     """
