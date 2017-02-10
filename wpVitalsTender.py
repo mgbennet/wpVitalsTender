@@ -26,11 +26,12 @@ def article_list_assessment_check(article_title, section=None):
     listings = parse_article(content)
     mismatches = []
     print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
+    assessments = current_assessments([l["title"] for l in listings])
     for l in listings:
-        assessments = current_assessment(l["title"])
-        if not l["assessment"] in assessments:
-            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": assessments})
-            print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(assessments))
+        article_assessments = assessments[l["title"]]
+        if not l["assessment"] in article_assessments:
+            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
+            print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(article_assessments))
     print(str(len(mismatches)) + " mismatches found.")
     return mismatches
 
@@ -49,6 +50,7 @@ def get_content(article_title, section=None):
         query_attrs["rvsection"] = section
     resp = requests.get(baseurl, query_attrs)
     pages = resp.json()["query"]["pages"]
+    # only one page is queried, so return the first page's first revision text, or None if we didn't get anything.
     for p_key, p_val in pages.items():
         return p_val["revisions"][0]["*"]
     return None
@@ -56,8 +58,9 @@ def get_content(article_title, section=None):
 
 def parse_article(content):
     """Finds all article links with an icon indicating assessed quality in a wikipedia page.
-    Matches the following style:
-    [1.|*] {{icon|FA}} {{Icon|FGA}} [[Article title]]
+    Matches the following styles:
+    1. {{icon|FA}} {{Icon|FGA}} [[Article title]]
+    * {{icon|Start}} [[Article title|Displayed article title]]
 
     :param content: The content to be parsed
     :return: List of dicts of style: {title: "article_title", assessment: "Stub|C|B|A|etc.", history: None|"FFA|FGA"}
@@ -71,10 +74,11 @@ def parse_article(content):
     ''', re.VERBOSE)
     results = []
     for l in article_listing_regex.finditer(content):
-        article = {}
-        article["title"] = l.group("title").split("|")[0]
-        article["assessment"] = l.group("assessment").split("|")[-1][:-2]
-        article["history"] = None
+        article = {
+            "title": l.group("title").split("|")[0],
+            "assessment": l.group("assessment").split("|")[-1][:-2],
+            "history": None,
+        }
         if l.group("history"):
             article["history"] = l.group("history").split("|")[-1][:-2]
         results.append(article)
@@ -99,22 +103,33 @@ def current_assessment(article_title):
 
 
 def current_assessments(article_titles):
+    """Retrieves current assessments for list of Wikipedia articles.
+    returns {"article_title": [list, of, project, assessments], ....} """
     result = batch_query({"prop": "pageassessments"}, article_titles)
     return {page: [proj["class"] for proj_key, proj in result[page].items()] for page in result}
 
 
-def batch_query(request, article_titles):
+def batch_query(request, article_titles, print_num_queries=False):
+    """Queries Wikipedia article for multiple articles
+
+    :param request: Query attributes dict. Most import value is "prop"
+    :param article_titles: List of article titles to be queried.
+    :param print_num_queries: Option to print the number of api calls that were made
+    :return: Dict of format {"article_title": {dict of "prop" results}}
+    """
     request["action"] = "query"
     request["format"] = "json"
-    last_continue = {"continue": ""}
     results = {}
+    num_queries = 0
     # can only query for 50 titles at a time, and even then have to do some fanciness to actually get the info
     for i in range(0, len(article_titles), 50):
+        last_continue = {"continue": ""}
         request["titles"] = "|".join(article_titles[i:i + 50])
         while True:
             req = request.copy()
             req.update(last_continue)
             r = requests.get("https://en.wikipedia.org/w/api.php", params=req).json()
+            num_queries += 1
             if "error" in r:
                 raise ConnectionError(r["error"])
             if "query" in r:
@@ -128,12 +143,14 @@ def batch_query(request, article_titles):
             if "batchcomplete" in r:
                 break
             last_continue = r["continue"]
+    if print_num_queries:
+        print(num_queries)
     return results
 
 
 def main():
     args = sys.argv[1:]
-    article_title = "Wikipedia:Vital articles/Level/1"
+    article_title = "Wikipedia:Vital articles/Level/2"
     section = None
     if len(args):
         article_title = args[0]
