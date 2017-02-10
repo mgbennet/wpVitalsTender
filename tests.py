@@ -30,5 +30,12 @@ class TestWpVitalsTender(unittest.TestCase):
         result = wpvt.current_assessment(article_title)
         self.assertIn(article_quality, result)
 
+    def test_current_assessments(self):
+        article_titles = ["Mummy Cave", "Land", "Tunng", "Bread"]
+        article_qualities = ["GA", "C", "Start", "C"]
+        result = wpvt.current_assessments(article_titles)
+        for ind, article in enumerate(article_titles):
+            self.assertIn(article_qualities[ind], result[article])
+
 if __name__ == '__main__':
     unittest.main()

@@ -98,6 +98,39 @@ def current_assessment(article_title):
     return None
 
 
+def current_assessments(article_titles):
+    result = batch_query({"prop": "pageassessments"}, article_titles)
+    return {page: [proj["class"] for proj_key, proj in result[page].items()] for page in result}
+
+
+def batch_query(request, article_titles):
+    request["action"] = "query"
+    request["format"] = "json"
+    last_continue = {"continue": ""}
+    results = {}
+    # can only query for 50 titles at a time, and even then have to do some fanciness to actually get the info
+    for i in range(0, len(article_titles), 50):
+        request["titles"] = "|".join(article_titles[i:i + 50])
+        while True:
+            req = request.copy()
+            req.update(last_continue)
+            r = requests.get("https://en.wikipedia.org/w/api.php", params=req).json()
+            if "error" in r:
+                raise ConnectionError(r["error"])
+            if "query" in r:
+                for page_key, page_val in r["query"]["pages"].items():
+                    # page_val may not have
+                    if request["prop"] in page_val:
+                        if page_val["title"] in results:
+                            results[page_val["title"]].update(page_val[request["prop"]])
+                        else:
+                            results[page_val["title"]] = page_val[request["prop"]]
+            if "batchcomplete" in r:
+                break
+            last_continue = r["continue"]
+    return results
+
+
 def main():
     args = sys.argv[1:]
     article_title = "Wikipedia:Vital articles/Level/1"
