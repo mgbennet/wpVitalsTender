@@ -12,7 +12,7 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 
 2. In your command line terminal, navigate to the folder containing this project and enter the command `python wpVitalsTender.py "Wikipedia:Vital articles"` to run the script on the [Vital articles](https://en.wikipedia.org/wiki/Wikipedia:Vital_articles) page.
 
-..* If you would like to limit your search to a single section to increase the speed of the script, you can add an optional section number to the end, like `python wpVitalsTender.py "Wikipedia:Vital articles" 3`, which will only search the 132 articles of the People section.
+   * If you would like to limit your search to a single section to increase the speed of the script, you can add an optional section number to the end, like `python wpVitalsTender.py "Wikipedia:Vital articles" 3`, which will only search the 132 articles of the People section.
 
 3. The script will print out any mismatches found. You may want to manually confirm this, as some projects don't properly give their assessments to the API call.
 
@@ -20,4 +20,4 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?
 * Figure out why WikiProject Math assessments don't show up in the api call.
 * Use mock tests for tests that involve API calls
-* Maybe make a bot that automatically updates the listing? I'd need to look into what it takes to run a Wikipedia bot...
+* Maybe make a bot that automatically updates the listing? There may be too many edge cases, like articles that belong to only one WikiProject that doesn't do assessment (for example the Classical Music project)...

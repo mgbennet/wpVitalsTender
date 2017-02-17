@@ -15,7 +15,7 @@ import requests
 
 
 def article_list_assessment_check(article_title, section=None):
-    """Given a wikipdia page listing articles, compares listed article
+    """Given a Wikipdia page listing articles, compares listed article
     quality assessments to actual current assessment.
     :param article_title: Wikipedia page containing a list of articles and their assessments
     :param section: optional sub section of above page.
@@ -28,10 +28,13 @@ def article_list_assessment_check(article_title, section=None):
     print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
     assessments = current_assessments([l["title"] for l in listings])
     for l in listings:
-        article_assessments = assessments[l["title"]]
-        if not l["assessment"] in article_assessments:
-            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
-            print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(article_assessments))
+        if l["title"] in assessments:
+            article_assessments = assessments[l["title"]]
+            if not l["assessment"] in article_assessments:
+                mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
+                print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(article_assessments))
+        else:
+            print(l["title"] + " has no assessments! Possible redirect or issue with WikiProject?")
     print(str(len(mismatches)) + " mismatches found.")
     return mismatches
 
@@ -57,9 +60,10 @@ def get_content(article_title, section=None):
 
 
 def parse_article(content):
-    """Finds all article links with an icon indicating assessed quality in a wikipedia page.
-    Matches the following styles:
+    """Finds all article links with an icon indicating assessed quality in a Wikipedia page.
+    Matches listings structured like:
     1. {{icon|FA}} {{Icon|FGA}} [[Article title]]
+     or
     * {{icon|Start}} [[Article title|Displayed article title]]
 
     :param content: The content to be parsed
@@ -86,7 +90,7 @@ def parse_article(content):
 
 
 def current_assessment(article_title):
-    """Retrieves current assessment of Wikipedia article."""
+    """Retrieves current assessment of one Wikipedia article."""
     baseurl = "https://en.wikipedia.org/w/api.php"
     query_attrs = {
         "action": "query",
