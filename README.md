@@ -18,6 +18,5 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 
 ## To-do
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?
-* Figure out why WikiProject Math assessments don't show up in the api call.
 * Use mock tests for tests that involve API calls
 * Maybe make a bot that automatically updates the listing? There may be too many edge cases, like articles that belong to only one WikiProject that doesn't do assessment (for example the Classical Music project)...

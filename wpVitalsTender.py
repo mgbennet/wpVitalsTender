@@ -15,7 +15,7 @@ import requests
 
 
 def article_list_assessment_check(article_title, section=None):
-    """Given a Wikipdia page listing articles, compares listed article
+    """Given a Wikipedia page listing articles, compares listed article
     quality assessments to actual current assessment.
     :param article_title: Wikipedia page containing a list of articles and their assessments
     :param section: optional sub section of above page.
@@ -34,6 +34,7 @@ def article_list_assessment_check(article_title, section=None):
                 mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
                 print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(article_assessments))
         else:
+            mismatches.append({"title": l["title"], "list_as": l["assessment"], "current": None})
             print(l["title"] + " has no assessments! Possible redirect or issue with WikiProject?")
     print(str(len(mismatches)) + " mismatches found.")
     return mismatches
