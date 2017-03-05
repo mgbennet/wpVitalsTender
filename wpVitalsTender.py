@@ -21,21 +21,17 @@ def article_list_assessment_check(article_title, section=None):
     :param section: optional sub section of above page.
     :return: List containing all mismatched articles.
     """
-
     content = get_content(article_title, section)
     listings = parse_article(content)
-    mismatches = []
     print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
     assessments = current_assessments([l["title"] for l in listings])
-    for l in listings:
-        if l["title"] in assessments:
-            article_assessments = assessments[l["title"]]
-            if not l["assessment"] in article_assessments:
-                mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
-                print("Found a mismatch! " + l["title"] + " listed as " + l["assessment"] + ", currently " + str(article_assessments))
+    mismatches = find_mismatches(listings, assessments)
+
+    for m in mismatches:
+        if m["current"]:
+            print("Found a mismatch! " + m["title"] + " listed as " + m["listed_as"] + ", currently " + str(m["current"]))
         else:
-            mismatches.append({"title": l["title"], "list_as": l["assessment"], "current": None})
-            print(l["title"] + " has no assessments! Possible redirect or issue with WikiProject?")
+            print(m["title"] + " has no assessments! Possible redirect or issue with WikiProject?")
     print(str(len(mismatches)) + " mismatches found.")
     return mismatches
 
@@ -151,6 +147,18 @@ def batch_query(request, article_titles, print_num_queries=False):
     if print_num_queries:
         print(num_queries)
     return results
+
+
+def find_mismatches(listings, assessments):
+    mismatches = []
+    for l in listings:
+        if l["title"] in assessments:
+            article_assessments = assessments[l["title"]]
+            if not l["assessment"] in article_assessments:
+                mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
+        else:
+            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": None})
+    return mismatches
 
 
 def main():

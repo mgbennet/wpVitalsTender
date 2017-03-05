@@ -42,5 +42,29 @@ class TestWpVitalsTender(unittest.TestCase):
         for ind, article in enumerate(article_titles):
             self.assertIn(article_qualities[ind], result[article])
 
+    def test_find_mismatches(self):
+        with open('test_docs/test_parse_article.txt', 'r') as file:
+            test_content = file.read();
+            listings = wpvt.parse_article(test_content)
+            assessments = {
+                "Land": ["C"],
+                "Desert": ["GA", "B"],
+                "Sahara": ["B"],
+                "Glacier": ["B"],
+                "Grand Canyon": ["B"],
+                "Mountain": ["Start", "B", "Stub"],  # Actually C
+                "Alps (mountains)": ["C", "C", "C", "Start"],
+                "Andes": ["C"],
+                "Himalayas": ["B"],  # Actually C
+                "Mount Everest": ["Start"],
+                "Rocky Mountains": ["B"],
+            }
+            results = wpvt.find_mismatches(listings, assessments)
+
+            self.assertIn({"title": "Forest", "listed_as": "B", "current": None}, results)
+            self.assertIn({"title": "Mountain", "listed_as": "C", "current": ["Start", "B", "Stub"]}, results)
+            self.assertIn({"title": "Himalayas", "listed_as": "C", "current": ["B"]}, results)
+
+
 if __name__ == '__main__':
     unittest.main()
