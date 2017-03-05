@@ -14,7 +14,7 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 
    * If you would like to limit your search to a single section to increase the speed of the script, you can add an optional section number to the end, like `python wpVitalsTender.py "Wikipedia:Vital articles" 3`, which will only search the 132 articles of the People section.
 
-3. The script will print out any mismatches found. You may want to manually confirm this, as some projects don't properly give their assessments to the API call.
+3. The script will print out any mismatches found, as well as any pages without assessments, such as redirects or pages not belonging to WikiProjects that do assessments (Classical Music is one such project).
 
 ## To-do
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?

@@ -1,0 +1,19 @@
+This list is tailored to the English-language Wikipedia. There is also a [[m:List of articles every Wikipedia should have|list of one thousand articles]] considered vital to Wikipedias of all languages.
+
+For more information on this list and the process for adding articles, please see the [[Wikipedia talk:Vital articles/Frequently Asked Questions|Frequently Asked Questions (FAQ) page]].
+==Current total: 1000==
+* Added [[Early human migrations]] per [[Wikipedia_talk:Vital_articles#Add_Early human migrations|discussion]]
+
+===Terrestrial features (12 articles)===
+* {{Icon|C}} '''[[Land]]''' ([[Wikipedia:Vital articles/Level/2|Level 2]])
+* {{Icon|GA}} [[Desert]]
+** {{Icon|B}} [[Sahara]]
+* {{Icon|B}} [[Forest]]
+*{{Icon|B}} {{Icon|DGA}} [[Glacier]]
+* {{Icon|B}} {{Icon|FFA}} {{Icon|DGA}} [[Grand Canyon]]
+* {{Icon|C}} [[Mountain]]
+** {{Icon|C}} [[Alps (mountains)|Alps]]
+# {{Icon|C}} [[Andes]]
+##{{Icon|C}} [[Himalayas]]
+*** {{Icon|Start}} [[Mount Everest]]
+**{{Icon|B}}{{Icon|DGA}}[[Rocky Mountains]]{{col-end}}
