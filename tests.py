@@ -19,6 +19,8 @@ def mock_requests_get(*args, **kwargs):
         return Mock_Response('test_docs/test_WikipediaLevel1_content.json', 200)
     if args[1]["titles"] == "Mummy Cave":
         return Mock_Response('test_docs/test_MummyCave_assessment.json', 200)
+    if args[1]["titles"] == "Mummy Cave|Land|Tunng|Bread":
+        return Mock_Response('test_docs/test_MultipleArticles_assessment.json', 200)
     return Mock_Response("", 404)
 
 
@@ -59,20 +61,18 @@ class TestWpVitalsTender(unittest.TestCase):
 
     @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
     def test_current_assessment(self, mock_get):
-        def get_mock_json():
-            with open('test_docs/test_MummyCave_assessment.json', 'r') as file:
-                return json.loads(file.read())
-        mock_get.return_value.json = get_mock_json
         article_title = "Mummy Cave"
         result = wpvt.current_assessment(article_title)
 
         self.assertIn("GA", result)
         self.assertEqual(len(result), 5)
 
-    def test_current_assessments(self):
+    @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
+    def test_current_assessments(self, mock_get):
         article_titles = ["Mummy Cave", "Land", "Tunng", "Bread"]
         article_qualities = ["GA", "C", "Start", "C"]
         result = wpvt.current_assessments(article_titles)
+
         for ind, article in enumerate(article_titles):
             self.assertIn(article_qualities[ind], result[article])
 

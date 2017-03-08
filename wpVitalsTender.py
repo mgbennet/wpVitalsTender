@@ -129,7 +129,7 @@ def batch_query(request, article_titles, print_num_queries=False):
         while True:
             req = request.copy()
             req.update(last_continue)
-            r = requests.get("https://en.wikipedia.org/w/api.php", params=req).json()
+            r = requests.get("https://en.wikipedia.org/w/api.php", req).json()
             num_queries += 1
             if "error" in r:
                 raise ConnectionError(r["error"])
