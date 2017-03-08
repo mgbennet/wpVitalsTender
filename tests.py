@@ -5,22 +5,34 @@ import requests
 import json
 
 
+def mock_requests_get(*args, **kwargs):
+    class Mock_Response:
+        def __init__(self, content_file, status_code):
+            with open(content_file, 'r') as f:
+                self.content = f.read()
+                self.status_code = status_code
+
+        def json(self):
+            return json.loads(self.content)
+
+    if args[1]["titles"] == "Wikipedia:Vital articles/Level/1":
+        return Mock_Response('test_docs/test_WikipediaLevel1_content.json', 200)
+    if args[1]["titles"] == "Mummy Cave":
+        return Mock_Response('test_docs/test_MummyCave_assessment.json', 200)
+    return Mock_Response("", 404)
+
+
 class TestWpVitalsTender(unittest.TestCase):
 
-    @unittest.mock.patch.object(requests, 'get', autospec=True)
+    @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
     def test_get_content(self, mock_get):
-        def get_mock_json():
-            with open('test_docs/test_get_content.json', 'r') as file:
-                return json.loads(file.read())
-        mock_get.return_value.json = get_mock_json
-
         article_title = "Wikipedia:Vital articles/Level/1"
         result = wpvt.get_content(article_title)
 
         self.assertIn("Earth", result)
         self.assertIn("Technology", result)
         self.assertIn("[[Category:Wikipedia level-1 vital articles|*]]", result)
-        mock_get.assert_called_with('https://en.wikipedia.org/w/api.php',{
+        mock_get.assert_called_with('https://en.wikipedia.org/w/api.php', {
             "action": "query",
             "titles": article_title,
             "prop": "revisions",
@@ -29,8 +41,8 @@ class TestWpVitalsTender(unittest.TestCase):
         })
 
     def test_parse_article(self):
-        with open('test_docs/test_parse_article.txt', 'r') as file:
-            test_content = file.read();
+        with open('test_docs/test_parse_article.txt', 'r') as article_file:
+            test_content = article_file.read()
             result = wpvt.parse_article(test_content)
 
             self.assertEqual(len(result), 12)
@@ -45,14 +57,13 @@ class TestWpVitalsTender(unittest.TestCase):
             self.assertEqual(None, result[10]["history"])
             self.assertEqual("DGA", result[11]["history"])
 
-    @unittest.mock.patch.object(requests, 'get', autospec=True)
+    @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
     def test_current_assessment(self, mock_get):
         def get_mock_json():
-            with open('test_docs/test_current_assessment.json', 'r') as file:
+            with open('test_docs/test_MummyCave_assessment.json', 'r') as file:
                 return json.loads(file.read())
         mock_get.return_value.json = get_mock_json
         article_title = "Mummy Cave"
-
         result = wpvt.current_assessment(article_title)
 
         self.assertIn("GA", result)
@@ -66,8 +77,8 @@ class TestWpVitalsTender(unittest.TestCase):
             self.assertIn(article_qualities[ind], result[article])
 
     def test_find_mismatches(self):
-        with open('test_docs/test_parse_article.txt', 'r') as file:
-            test_content = file.read();
+        with open('test_docs/test_parse_article.txt', 'r') as article_file:
+            test_content = article_file.read()
             listings = wpvt.parse_article(test_content)
             assessments = {
                 "Land": ["C"],
