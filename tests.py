@@ -1,15 +1,32 @@
 import unittest
+import unittest.mock
 import wpVitalsTender as wpvt
+import requests
+import json
 
 
 class TestWpVitalsTender(unittest.TestCase):
 
-    def test_get_content(self):
+    @unittest.mock.patch.object(requests, 'get', autospec=True)
+    def test_get_content(self, mock_get):
+        def get_mock_json():
+            with open('test_docs/test_get_content.json', 'r') as file:
+                return json.loads(file.read())
+        mock_get.return_value.json = get_mock_json
+
         article_title = "Wikipedia:Vital articles/Level/1"
         result = wpvt.get_content(article_title)
+
         self.assertIn("Earth", result)
         self.assertIn("Technology", result)
         self.assertIn("[[Category:Wikipedia level-1 vital articles|*]]", result)
+        mock_get.assert_called_with('https://en.wikipedia.org/w/api.php',{
+            "action": "query",
+            "titles": article_title,
+            "prop": "revisions",
+            "rvprop": "content",
+            "format": "json"
+        })
 
     def test_parse_article(self):
         with open('test_docs/test_parse_article.txt', 'r') as file:
@@ -28,12 +45,18 @@ class TestWpVitalsTender(unittest.TestCase):
             self.assertEqual(None, result[10]["history"])
             self.assertEqual("DGA", result[11]["history"])
 
-    def test_current_assessment(self):
-        # As this queries a real Wikipedia article, this test may need to be updated if the page improves.
+    @unittest.mock.patch.object(requests, 'get', autospec=True)
+    def test_current_assessment(self, mock_get):
+        def get_mock_json():
+            with open('test_docs/test_current_assessment.json', 'r') as file:
+                return json.loads(file.read())
+        mock_get.return_value.json = get_mock_json
         article_title = "Mummy Cave"
-        article_quality = "GA"
+
         result = wpvt.current_assessment(article_title)
-        self.assertIn(article_quality, result)
+
+        self.assertIn("GA", result)
+        self.assertEqual(len(result), 5)
 
     def test_current_assessments(self):
         article_titles = ["Mummy Cave", "Land", "Tunng", "Bread"]

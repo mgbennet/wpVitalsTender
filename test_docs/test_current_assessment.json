@@ -1,0 +1,34 @@
+{
+    "batchcomplete": "",
+    "query": {
+        "pages": {
+            "23787578": {
+                "pageid": 23787578,
+                "ns": 0,
+                "title": "Mummy Cave",
+                "pageassessments": {
+                    "United States": {
+                        "class": "GA",
+                        "importance": "Low"
+                    },
+                    "National Register of Historic Places": {
+                        "class": "GA",
+                        "importance": "Mid"
+                    },
+                    "Indigenous peoples of North America": {
+                        "class": "GA",
+                        "importance": ""
+                    },
+                    "Archaeology": {
+                        "class": "GA",
+                        "importance": "Low"
+                    },
+                    "Indigenous peoples of the Americas": {
+                        "class": "GA",
+                        "importance": "Low"
+                    }
+                }
+            }
+        }
+    }
+}

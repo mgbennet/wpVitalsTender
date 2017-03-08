@@ -1,0 +1,19 @@
+{
+    "batchcomplete": "",
+    "query": {
+        "pages": {
+            "22828267": {
+                "pageid": 22828267,
+                "ns": 4,
+                "title": "Wikipedia:Vital articles/Level/1",
+                "revisions": [
+                    {
+                        "contentformat": "text/x-wiki",
+                        "contentmodel": "wikitext",
+                        "*": "{{Wikipedia:Vital articles/Level/Nav bar}}\n\nThese are ten subjects on which Wikipedia should have corresponding high-quality articles. They form Level 1 of the '''Vital articles''' list.\n\nArticles [[WP:ASSESS#Grades|are labelled]] as:\n{{Div col|2}}\n* [[Wikipedia:Featured articles|Featured articles]] {{Icon|FA}}\n* Former featured articles {{Icon|FFA}}\n* A-class articles {{Icon|A}}\n* [[Wikipedia:Good articles|Good articles]] {{Icon|GA}}\n* Delisted good articles {{Icon|DGA}}\n* B-class articles {{Icon|B}}\n* C-class articles {{Icon|C}}\n* Start-class articles {{Icon|Start}}\n* <small>A full list is at [[Template:Icon/doc]]</small>\n{{Div col end}}\n\nThese symbols are updated manually and may be out of date; you are encouraged to fix any errors you discover.\n\nArticle assessments current as of 11 December 2016.\n\n==The ten articles==\n# {{Icon|FA}} [[Earth]]\n# {{Icon|B}} [[Life]]\n# {{Icon|B}} {{Icon|FFA}} {{Icon|DGA}} [[Human]]\n# {{Icon|B}} {{Icon|DGA}} [[History of the world]]\n# {{Icon|C}} {{Icon|DGA}} [[Culture]]\n# {{Icon|GA}} [[Language]]\n# {{Icon|C}} [[The arts]]\n# {{Icon|B}} [[Science]]\n# {{Icon|B}} [[Technology]]\n# {{Icon|B}} {{Icon|DGA}} [[Mathematics]]\n\n{{Core topics}}\n\n[[Category:Wikipedia level-1 vital articles|*]]"
+                    }
+                ]
+            }
+        }
+    }
+}
