@@ -1,0 +1,147 @@
+{
+    "continue": {
+        "pacontinue": "98370|646",
+        "continue": "||",
+        "mockcontinue": "17"
+    },
+    "query": {
+        "pages": {
+            "141008": {
+                "pageid": 141008,
+                "ns": 0,
+                "title": "Akashi Kaiky\u014d Bridge"
+            },
+            "191295": {
+                "pageid": 191295,
+                "ns": 0,
+                "title": "Aswan Dam"
+            },
+            "3397": {
+                "pageid": 3397,
+                "ns": 0,
+                "title": "Bridge"
+            },
+            "47742": {
+                "pageid": 47742,
+                "ns": 0,
+                "title": "Brooklyn Bridge"
+            },
+            "5702": {
+                "pageid": 5702,
+                "ns": 0,
+                "title": "Channel Tunnel"
+            },
+            "51518": {
+                "pageid": 51518,
+                "ns": 0,
+                "title": "Dam"
+            },
+            "46596": {
+                "pageid": 46596,
+                "ns": 0,
+                "title": "Drainage"
+            },
+            "20913655": {
+                "pageid": 20913655,
+                "ns": 0,
+                "title": "Flood control"
+            },
+            "4865141": {
+                "pageid": 4865141,
+                "ns": 0,
+                "title": "Flood control in the Netherlands"
+            },
+            "12103": {
+                "pageid": 12103,
+                "ns": 0,
+                "title": "Golden Gate Bridge"
+            },
+            "57169": {
+                "pageid": 57169,
+                "ns": 0,
+                "title": "HVAC"
+            },
+            "14308": {
+                "pageid": 14308,
+                "ns": 0,
+                "title": "Hoover Dam"
+            },
+            "70565": {
+                "pageid": 70565,
+                "ns": 0,
+                "title": "Itaipu Dam",
+                "pageassessments": {
+                    "Brazil": {
+                        "class": "C",
+                        "importance": "High"
+                    },
+                    "Energy": {
+                        "class": "C",
+                        "importance": "High"
+                    },
+                    "Indigenous peoples of the Americas": {
+                        "class": "C",
+                        "importance": "Unknown"
+                    },
+                    "Dams": {
+                        "class": "C",
+                        "importance": "Top"
+                    },
+                    "Paraguay": {
+                        "class": "C",
+                        "importance": "Top"
+                    }
+                }
+            },
+            "43024": {
+                "pageid": 43024,
+                "ns": 0,
+                "title": "Levee"
+            },
+            "98370": {
+                "pageid": 98370,
+                "ns": 0,
+                "title": "London Bridge",
+                "pageassessments": {
+                    "Thames": {
+                        "class": "B",
+                        "importance": "High"
+                    },
+                    "London": {
+                        "class": "B",
+                        "importance": "Top"
+                    },
+                    "CD Selection": {
+                        "class": "",
+                        "importance": ""
+                    }
+                }
+            },
+            "3292675": {
+                "pageid": 3292675,
+                "ns": 0,
+                "title": "Reservoir"
+            },
+            "65192": {
+                "pageid": 65192,
+                "ns": 0,
+                "title": "Three Gorges Dam",
+                "pageassessments": {
+                    "Environment": {
+                        "class": "GA",
+                        "importance": "Mid"
+                    },
+                    "Dams": {
+                        "class": "GA",
+                        "importance": "Top"
+                    }
+                }
+            },
+            "160832": {
+                "pageid": 160832,
+                "ns": 0,
+                "title": "Tunnel"
+            }
+        }
+    }
+}

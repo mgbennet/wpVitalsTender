@@ -135,7 +135,7 @@ def batch_query(request, article_titles, print_num_queries=False):
                 raise ConnectionError(r["error"])
             if "query" in r:
                 for page_key, page_val in r["query"]["pages"].items():
-                    # page_val may not have
+                    # returns piecemeal, not all props in the same request
                     if request["prop"] in page_val:
                         if page_val["title"] in results:
                             results[page_val["title"]].update(page_val[request["prop"]])
@@ -155,9 +155,17 @@ def find_mismatches(listings, assessments):
         if l["title"] in assessments:
             article_assessments = assessments[l["title"]]
             if not l["assessment"] in article_assessments:
-                mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": article_assessments})
+                mismatches.append({
+                    "title": l["title"],
+                    "listed_as": l["assessment"],
+                    "current": article_assessments
+                })
         else:
-            mismatches.append({"title": l["title"], "listed_as": l["assessment"], "current": None})
+            mismatches.append({
+                "title": l["title"],
+                "listed_as": l["assessment"],
+                "current": None
+            })
     return mismatches
 
 

@@ -20,7 +20,7 @@
                         "importance": "Top"
                     },
                     "Religion": {
-                        "class": "C",
+                        "class": "Start",
                         "importance": "High"
                     },
                     "North America": {
@@ -77,6 +77,11 @@
                         "importance": ""
                     }
                 }
+            },
+            "670": {
+                "pageid": 670,
+                "ns": 0,
+                "title": "Alphabets"
             }
         }
     }

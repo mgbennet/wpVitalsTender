@@ -1,0 +1,311 @@
+{
+    "continue": {
+        "pacontinue": "8637|756",
+        "continue": "||",
+        "mockcontinue": "1"
+    },
+    "query": {
+        "pages": {
+            "265567": {
+                "pageid": 265567,
+                "ns": 0,
+                "title": "Apartment"
+            },
+            "52070": {
+                "pageid": 52070,
+                "ns": 0,
+                "title": "Arch"
+            },
+            "234514": {
+                "pageid": 234514,
+                "ns": 0,
+                "title": "Bathroom"
+            },
+            "646059": {
+                "pageid": 646059,
+                "ns": 0,
+                "title": "Bedroom"
+            },
+            "4526": {
+                "pageid": 4526,
+                "ns": 0,
+                "title": "Brick",
+                "pageassessments": {
+                    "Architecture": {
+                        "class": "C",
+                        "importance": "Top"
+                    },
+                    "Engineering": {
+                        "class": "C",
+                        "importance": "Mid"
+                    }
+                }
+            },
+            "45995": {
+                "pageid": 45995,
+                "ns": 0,
+                "title": "Building"
+            },
+            "844811": {
+                "pageid": 844811,
+                "ns": 0,
+                "title": "Ceiling"
+            },
+            "6670": {
+                "pageid": 6670,
+                "ns": 0,
+                "title": "Cement",
+                "pageassessments": {
+                    "Chemistry": {
+                        "class": "B",
+                        "importance": "Low"
+                    },
+                    "Civil engineering": {
+                        "class": "B",
+                        "importance": "Top"
+                    }
+                }
+            },
+            "6920": {
+                "pageid": 6920,
+                "ns": 0,
+                "title": "Column",
+                "pageassessments": {
+                    "Architecture": {
+                        "class": "Start",
+                        "importance": "Mid"
+                    },
+                    "Civil engineering": {
+                        "class": "Start",
+                        "importance": "Low"
+                    }
+                }
+            },
+            "5371": {
+                "pageid": 5371,
+                "ns": 0,
+                "title": "Concrete",
+                "pageassessments": {
+                    "Architecture": {
+                        "class": "B",
+                        "importance": "Top"
+                    },
+                    "Civil engineering": {
+                        "class": "B",
+                        "importance": "Top"
+                    },
+                    "Occupational Safety and Health": {
+                        "class": "",
+                        "importance": "Unknown"
+                    }
+                }
+            },
+            "801763": {
+                "pageid": 801763,
+                "ns": 0,
+                "title": "Dining room"
+            },
+            "167258": {
+                "pageid": 167258,
+                "ns": 0,
+                "title": "Dome"
+            },
+            "8637": {
+                "pageid": 8637,
+                "ns": 0,
+                "title": "Door",
+                "pageassessments": {
+                    "Architecture": {
+                        "class": "B",
+                        "importance": "Mid"
+                    }
+                }
+            },
+            "1105937": {
+                "pageid": 1105937,
+                "ns": 0,
+                "title": "Electrical wiring"
+            },
+            "19373997": {
+                "pageid": 19373997,
+                "ns": 0,
+                "title": "Elevator"
+            },
+            "332666": {
+                "pageid": 332666,
+                "ns": 0,
+                "title": "Facade"
+            },
+            "82926": {
+                "pageid": 82926,
+                "ns": 0,
+                "title": "Floor"
+            },
+            "693334": {
+                "pageid": 693334,
+                "ns": 0,
+                "title": "Foundation (engineering)"
+            },
+            "3022392": {
+                "pageid": 3022392,
+                "ns": 0,
+                "title": "Garage (residential)"
+            },
+            "13475": {
+                "pageid": 13475,
+                "ns": 0,
+                "title": "Harbor"
+            },
+            "13590": {
+                "pageid": 13590,
+                "ns": 0,
+                "title": "House"
+            },
+            "3198042": {
+                "pageid": 3198042,
+                "ns": 0,
+                "title": "Hut"
+            },
+            "167256": {
+                "pageid": 167256,
+                "ns": 0,
+                "title": "Igloo"
+            },
+            "174521": {
+                "pageid": 174521,
+                "ns": 0,
+                "title": "Infrastructure"
+            },
+            "49404": {
+                "pageid": 49404,
+                "ns": 0,
+                "title": "Kitchen"
+            },
+            "17725": {
+                "pageid": 17725,
+                "ns": 0,
+                "title": "Lighthouse"
+            },
+            "188386": {
+                "pageid": 188386,
+                "ns": 0,
+                "title": "Lighting"
+            },
+            "825977": {
+                "pageid": 825977,
+                "ns": 0,
+                "title": "Living room"
+            },
+            "59399": {
+                "pageid": 59399,
+                "ns": 0,
+                "title": "Lumber"
+            },
+            "20857": {
+                "pageid": 20857,
+                "ns": 0,
+                "title": "Masonry"
+            },
+            "382507": {
+                "pageid": 382507,
+                "ns": 0,
+                "title": "Office"
+            },
+            "287061": {
+                "pageid": 287061,
+                "ns": 0,
+                "title": "Pagoda"
+            },
+            "23931": {
+                "pageid": 23931,
+                "ns": 0,
+                "title": "Palace"
+            },
+            "277353": {
+                "pageid": 277353,
+                "ns": 0,
+                "title": "Pier"
+            },
+            "97169": {
+                "pageid": 97169,
+                "ns": 0,
+                "title": "Port"
+            },
+            "23704": {
+                "pageid": 23704,
+                "ns": 0,
+                "title": "Pyramid"
+            },
+            "204228": {
+                "pageid": 204228,
+                "ns": 0,
+                "title": "Quarry"
+            },
+            "26118": {
+                "pageid": 26118,
+                "ns": 0,
+                "title": "Roof"
+            },
+            "11383147": {
+                "pageid": 11383147,
+                "ns": 0,
+                "title": "Room"
+            },
+            "192232": {
+                "pageid": 192232,
+                "ns": 0,
+                "title": "Scaffolding"
+            },
+            "29485": {
+                "pageid": 29485,
+                "ns": 0,
+                "title": "Skyscraper"
+            },
+            "256015": {
+                "pageid": 256015,
+                "ns": 0,
+                "title": "Stairs"
+            },
+            "235363": {
+                "pageid": 235363,
+                "ns": 0,
+                "title": "Tent"
+            },
+            "214505": {
+                "pageid": 214505,
+                "ns": 0,
+                "title": "Tower"
+            },
+            "118767": {
+                "pageid": 118767,
+                "ns": 0,
+                "title": "Tower block"
+            },
+            "342526": {
+                "pageid": 342526,
+                "ns": 0,
+                "title": "Villa"
+            },
+            "39007": {
+                "pageid": 39007,
+                "ns": 0,
+                "title": "Wall"
+            },
+            "549146": {
+                "pageid": 549146,
+                "ns": 0,
+                "title": "Warehouse"
+            },
+            "49400": {
+                "pageid": 49400,
+                "ns": 0,
+                "title": "Window"
+            },
+            "423724": {
+                "pageid": 423724,
+                "ns": 0,
+                "title": "Yurt"
+            }
+        }
+    }
+}
