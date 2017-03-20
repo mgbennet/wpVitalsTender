@@ -14,24 +14,27 @@ def mock_requests_get(*args, **kwargs):
             with open(self.content_file, 'r') as f:
                 return json.loads(f.read())
 
-    if args[1]["prop"] == "revisions" and args[1]["titles"] == "Wikipedia:Vital articles/Level/1":
-        return MockResponse('test_docs/test_WikipediaLevel1_content.json', 200)
-    if args[1]["prop"] == "pageassessments" and args[1]["titles"] == "Mummy Cave":
-        return MockResponse('test_docs/test_MummyCave_assessment.json', 200)
-    if args[1]["prop"] == "pageassessments" and args[1]["titles"].startswith('Building|Infrastructure|Brick|Cement|Concrete|Lumber'):
-        file = "test_docs/MultiArticleAssessment/test_MultiArticleAssessment_"
-        if args[1]["continue"] == "":
-            file += "0.json"
-        else:
-            file += args[1]["mockcontinue"] + ".json"
-        return MockResponse(file, 200)
-    if args[1]["prop"] == "pageassessments" and args[1]["titles"].startswith('HVAC|Drainage|Dam|Aswan Dam|Hoover Dam'):
-        file = "test_docs/MultiArticleAssessment/test_MultiArticleAssessment_"
-        if args[1]["continue"] == "":
-            file += "12.json"
-        else:
-            file += args[1]["mockcontinue"] + ".json"
-        return MockResponse(file, 200)
+    if "redirects" in args[1] and args[1]["titles"] == "Buildings|Bricks|Houses|WW2|WW1|Cup":
+        return MockResponse('test_docs/test_Redirects.json', 200)
+    if "prop" in args[1]:
+        if args[1]["prop"] == "revisions" and args[1]["titles"] == "Wikipedia:Vital articles/Level/1":
+            return MockResponse('test_docs/test_WikipediaLevel1_content.json', 200)
+        if args[1]["prop"] == "pageassessments" and args[1]["titles"] == "Mummy Cave":
+            return MockResponse('test_docs/test_MummyCave_assessment.json', 200)
+        if args[1]["prop"] == "pageassessments" and args[1]["titles"].startswith('Building|Infrastructure|Brick|Cement|Concrete|Lumber'):
+            file = "test_docs/MultiArticleAssessment/test_MultiArticleAssessment_"
+            if args[1]["continue"] == "":
+                file += "0.json"
+            else:
+                file += args[1]["mockcontinue"] + ".json"
+            return MockResponse(file, 200)
+        if args[1]["prop"] == "pageassessments" and args[1]["titles"].startswith('HVAC|Drainage|Dam|Aswan Dam|Hoover Dam'):
+            file = "test_docs/MultiArticleAssessment/test_MultiArticleAssessment_"
+            if args[1]["continue"] == "":
+                file += "12.json"
+            else:
+                file += args[1]["mockcontinue"] + ".json"
+            return MockResponse(file, 200)
     return MockResponse("", 404)
 
 
@@ -68,6 +71,17 @@ class TestWpVitalsTender(unittest.TestCase):
             self.assertEqual("DGA", result[4]["history"])
             self.assertEqual(None, result[10]["history"])
             self.assertEqual("DGA", result[11]["history"])
+
+    @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
+    def test_find_redirects(self, mock_get):
+        articles = ['Buildings', 'Bricks', 'Houses', 'WW2', 'WW1', 'Cup']
+        redirects = ['Building', 'Brick', 'House', 'World War II', 'World War I', None]
+        results = wpvt.find_redirects(articles)
+        for i, a in enumerate(articles):
+            if redirects[i]:
+                self.assertEqual(redirects[i], results[a])
+            else:
+                self.assertNotIn(a, results)
 
     @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
     def test_current_assessment(self, mock_get):
@@ -125,7 +139,7 @@ class TestWpVitalsTender(unittest.TestCase):
         with open('test_docs/test_parse_article.txt', 'r') as article_file:
             test_content = article_file.read()
             listings = wpvt.parse_article(test_content)
-            mock_assessments = {
+            assessments = {
                 "Land": ["C"],
                 "Desert": ["GA", "B"],
                 "Sahara": ["B"],
@@ -138,7 +152,7 @@ class TestWpVitalsTender(unittest.TestCase):
                 "Mount Everest": ["Start"],
                 "Rocky Mountains": ["B"],
             }
-            results = wpvt.find_mismatches(listings, mock_assessments)
+            results = wpvt.find_mismatches(listings, assessments)
 
             self.assertIn({"title": "Forest", "listed_as": "B", "current": None}, results)
             self.assertIn({"title": "Mountain", "listed_as": "C", "current": ["Start", "B", "Stub"]}, results)

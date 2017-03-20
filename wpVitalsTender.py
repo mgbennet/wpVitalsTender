@@ -86,6 +86,22 @@ def parse_article(content):
     return results
 
 
+def find_redirects(article_titles):
+    results = {}
+    request = {
+        "action": "query",
+        "format": "json",
+        "redirects": ""
+    }
+    # can only query for 50 titles at a time, and even then have to do some fanciness to actually get the info
+    for i in range(0, len(article_titles), 50):
+        request["titles"] = "|".join(article_titles[i:i + 50])
+        r = requests.get("https://en.wikipedia.org/w/api.php", request).json()
+        for redirect in r["query"]["redirects"]:
+            results[redirect["from"]] = redirect["to"]
+    return results
+
+
 def current_assessment(article_title):
     """Retrieves current assessment of one Wikipedia article."""
     baseurl = "https://en.wikipedia.org/w/api.php"

@@ -1,0 +1,59 @@
+{
+    "batchcomplete": "",
+    "query": {
+        "redirects": [
+            {
+                "from": "WW2",
+                "to": "World War II"
+            },
+            {
+                "from": "WW1",
+                "to": "World War I"
+            },
+            {
+                "from": "Houses",
+                "to": "House"
+            },
+            {
+                "from": "Buildings",
+                "to": "Building"
+            },
+            {
+                "from": "Bricks",
+                "to": "Brick"
+            }
+        ],
+        "pages": {
+            "41395970": {
+                "pageid": 41395970,
+                "ns": 0,
+                "title": "Cup"
+            },
+            "4526": {
+                "pageid": 4526,
+                "ns": 0,
+                "title": "Brick"
+            },
+            "45995": {
+                "pageid": 45995,
+                "ns": 0,
+                "title": "Building"
+            },
+            "13590": {
+                "pageid": 13590,
+                "ns": 0,
+                "title": "House"
+            },
+            "4764461": {
+                "pageid": 4764461,
+                "ns": 0,
+                "title": "World War I"
+            },
+            "32927": {
+                "pageid": 32927,
+                "ns": 0,
+                "title": "World War II"
+            }
+        }
+    }
+}
