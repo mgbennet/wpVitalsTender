@@ -24,6 +24,14 @@ def article_list_assessment_check(article_title, section=None):
     content = get_content(article_title, section)
     listings = parse_article(content)
     print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
+    redirects = find_redirects([l["title"] for l in listings])
+    # probably should refactor so parse_articles returns a dictionary, not a list...
+    if len(redirects):
+        print("Found " + str(len(redirects)) + " redirects")
+    for listing in listings:
+        if listing["title"] in redirects:
+            print(listing["title"] + " redirects to " + redirects[listing["title"]])
+            listing["title"] = redirects[listing["title"]]
     assessments = current_assessments([l["title"] for l in listings])
     mismatches = find_mismatches(listings, assessments)
 
@@ -97,8 +105,9 @@ def find_redirects(article_titles):
     for i in range(0, len(article_titles), 50):
         request["titles"] = "|".join(article_titles[i:i + 50])
         r = requests.get("https://en.wikipedia.org/w/api.php", request).json()
-        for redirect in r["query"]["redirects"]:
-            results[redirect["from"]] = redirect["to"]
+        if "redirects" in r["query"]:
+            for redirect in r["query"]["redirects"]:
+                results[redirect["from"]] = redirect["to"]
     return results
 
 
