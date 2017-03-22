@@ -14,11 +14,10 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 
    * If you would like to limit your search to a single section to increase the speed of the script, you can add an optional section number to the end, like `python wpVitalsTender.py "Wikipedia:Vital articles" 3`, which will only search the (as of this writing) 132 articles of the People section.
 
-3. The script will print out any mismatches found, as well as any pages without assessments, such as redirects or pages not belonging to WikiProjects that do assessments (Classical Music is one such project).
+3. The script will print out any mismatches found, as well as any pages without assessments, such as pages not belonging to WikiProjects that do assessments (Classical Music is one such project).
 
 ## To-do
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?
 * Check if delisted good articles and former featured articles are appropriately marked.
-* Handle redirects better. Currently it fails to find assessments for redirected links.
 * Expand test coverage
 * Maybe make a bot that automatically updates the listing? There may be too many edge cases, like articles that belong to only one WikiProject that doesn't do assessment (for example the Classical Music project)...
