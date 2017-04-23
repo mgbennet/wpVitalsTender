@@ -14,6 +14,9 @@ import re
 import requests
 
 
+USER_AGENT = "wpVitalsTender (https://github.com/mgbennet/wpVitalsTender)"
+
+
 def article_list_assessment_check(article_title, section=None):
     """Given a Wikipedia page listing articles, compares listed article
     quality assessments to actual current assessment.
@@ -56,7 +59,7 @@ def get_content(article_title, section=None):
     }
     if section:
         query_attrs["rvsection"] = section
-    resp = requests.get(baseurl, query_attrs)
+    resp = requests.get(baseurl, query_attrs, headers={"User-Agent": USER_AGENT})
     pages = resp.json()["query"]["pages"]
     # only one page is queried, so return the first page's first revision text, or None if we didn't get anything.
     for p_key, p_val in pages.items():
@@ -105,7 +108,7 @@ def find_redirects(article_titles):
     # can only query for 50 titles at a time, and even then have to do some fanciness to actually get the info
     for i in range(0, len(article_titles), 50):
         request["titles"] = "|".join(article_titles[i:i + 50])
-        r = requests.get("https://en.wikipedia.org/w/api.php", request).json()
+        r = requests.get("https://en.wikipedia.org/w/api.php", request, headers={"User-Agent": USER_AGENT}).json()
         if "redirects" in r["query"]:
             for redirect in r["query"]["redirects"]:
                 results[redirect["from"]] = redirect["to"]
@@ -121,7 +124,7 @@ def current_assessment(article_title):
         "prop": "pageassessments",
         "format": "json"
     }
-    resp = requests.get(baseurl, query_attrs)
+    resp = requests.get(baseurl, query_attrs, headers={"User-Agent": USER_AGENT})
     pages = resp.json()["query"]["pages"]
     for p_key, p_val in pages.items():
         assessments = [proj_val["class"] for proj_key, proj_val in p_val["pageassessments"].items()]
@@ -155,7 +158,7 @@ def batch_query(request, article_titles, print_num_queries=False):
         while True:
             req = request.copy()
             req.update(last_continue)
-            r = requests.get("https://en.wikipedia.org/w/api.php", req).json()
+            r = requests.get("https://en.wikipedia.org/w/api.php", req, headers={"User-Agent": USER_AGENT}).json()
             num_queries += 1
             if "error" in r:
                 raise ConnectionError(r["error"])
