@@ -52,8 +52,8 @@ class TestWpVitalsTender(unittest.TestCase):
             "titles": article_title,
             "prop": "revisions",
             "rvprop": "content",
-            "format": "json"
-        })
+            "format": "json",
+        }, headers={"User-Agent": wpvt.USER_AGENT})
 
     def test_parse_article(self):
         with open('test_docs/test_parse_article.txt', 'r') as article_file:
