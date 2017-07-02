@@ -26,24 +26,24 @@ def article_list_assessment_check(article_title, section=None):
     """
     content = get_content(article_title, section)
     listings = parse_article(content)
-    print("Looking at " + article_title + ". Checking " + str(len(listings)) + " articles.")
+    print("Looking at {}. Checking {} articles.".format(article_title, len(listings)))
     redirects = find_redirects([l["title"] for l in listings])
     # probably should refactor so parse_articles returns a dictionary, not a list...
     if len(redirects):
-        print("Found " + str(len(redirects)) + " redirects")
+        print("Found {} redirects".format(len(redirects)))
     for listing in listings:
         if listing["title"] in redirects:
-            print(listing["title"] + " redirects to " + redirects[listing["title"]])
+            print("{} redirects to {}".format(listing["title"], redirects[listing["title"]]))
             listing["title"] = redirects[listing["title"]]
     assessments = current_assessments([l["title"] for l in listings])
     mismatches = find_mismatches(listings, assessments)
 
     for m in mismatches:
         if m["current"]:
-            print("Found a mismatch! " + m["title"] + " listed as " + m["listed_as"] + ", currently " + str(m["current"]))
+            print("Mismatch found! {} listed as {}, currently {}".format(m["title"], m["listed_as"], m["current"]))
         else:
-            print(m["title"] + " has no assessments! Possible issue with WikiProject or talk page?")
-    print(str(len(mismatches)) + " mismatches found.")
+            print("{} has no assessments! Possible issue with WikiProject or talk page?".format(m["title"]))
+    print("{} mismatches found.".format(len(mismatches)))
     return mismatches
 
 
@@ -78,11 +78,11 @@ def parse_article(content):
     :return: List of dicts of style: {title: "article_title", assessment: "Stub|C|B|A|etc.", history: None|"FFA|FGA"}
     """
     article_listing_regex = re.compile(r'''
-        [\*#]\s*                                        # line starts with a bullet or a number
+        [*#]\s*                                         # line starts with a bullet or a number
         (?P<assessment>\{\{[Ii]con\|\w+\}\})            # assessment should always be first
         (?P<history>\s*\{\{[Ii]con\|\w+\}\})*           # option of multiple icons for FFA, or DGA
         \s*
-        \'*\[\[(?P<title>[^#<>\[\]\{\}]+)\]\]           # actual title is a wikilink
+        \'*\[\[(?P<title>[^#<>\[\]{\}]+)\]\]            # actual title is a wikilink
     ''', re.VERBOSE)
     results = []
     for l in article_listing_regex.finditer(content):
