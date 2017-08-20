@@ -20,4 +20,5 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?
 * Check if delisted good articles and former featured articles are appropriately marked.
 * Expand test coverage
+* Option to export results to file (csv? txt?) with date
 * Maybe make a bot that automatically updates the listing? There may be too many edge cases, like articles that belong to only one WikiProject that doesn't do assessment (for example the Classical Music project)...

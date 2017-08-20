@@ -16,6 +16,24 @@ import requests
 
 USER_AGENT = "wpVitalsTender (https://github.com/mgbennet/wpVitalsTender)"
 
+default_article = "Wikipedia:Vital articles/Level/2"
+all_articles = [
+    "Wikipedia:Vital articles/Level/1",
+    "Wikipedia:Vital articles/Level/2",
+    "Wikipedia:Vital articles",
+    "Wikipedia:Vital articles/Expanded/People",
+    "Wikipedia:Vital articles/Expanded/History",
+    "Wikipedia:Vital articles/Expanded/Geography",
+    "Wikipedia:Vital articles/Expanded/Arts",
+    "Wikipedia:Vital articles/Expanded/Philosophy and religion",
+    "Wikipedia:Vital articles/Expanded/Everyday life",
+    "Wikipedia:Vital articles/Expanded/Society and social sciences",
+    "Wikipedia:Vital articles/Expanded/Biology and health sciences",
+    "Wikipedia:Vital articles/Expanded/Physical sciences",
+    "Wikipedia:Vital articles/Expanded/Technology",
+    "Wikipedia:Vital articles/Expanded/Mathematics"
+]
+
 
 def article_list_assessment_check(article_title, section=None):
     """Given a Wikipedia page listing articles, compares listed article
@@ -206,13 +224,18 @@ def find_mismatches(listings, assessments):
 
 def main():
     args = sys.argv[1:]
-    article_title = "Wikipedia:Vital articles/Level/2"
-    section = None
-    if len(args):
-        article_title = args[0]
-        if len(args) > 1:
-            section = args[1]
-    article_list_assessment_check(article_title, section)
+    if len(args) and args[0] == "all":
+        all_articles.reverse()
+        for article in all_articles:
+            article_list_assessment_check(article)
+    else:
+        article_title = default_article
+        section = None
+        if len(args):
+            article_title = args[0]
+            if len(args) > 1:
+                section = args[1]
+        article_list_assessment_check(article_title, section)
 
 
 if __name__ == "__main__":
