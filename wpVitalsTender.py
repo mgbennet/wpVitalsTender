@@ -207,7 +207,7 @@ def find_mismatches(listings, assessments):
     for l in listings:
         if l["title"] in assessments:
             article_assessments = assessments[l["title"]]
-            if not l["assessment"] in article_assessments:
+            if not l["assessment"].lower() in list(map(str.lower, article_assessments)):
                 mismatches.append({
                     "title": l["title"],
                     "listed_as": l["assessment"],
@@ -225,7 +225,6 @@ def find_mismatches(listings, assessments):
 def main():
     args = sys.argv[1:]
     if len(args) and args[0] == "all":
-        all_articles.reverse()
         for article in all_articles:
             article_list_assessment_check(article)
     else:
