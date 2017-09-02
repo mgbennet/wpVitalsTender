@@ -9,8 +9,8 @@ detect mismatches between an article's listed and actual assessed quality.
 """
 
 
-import sys
 import re
+import argparse
 import requests
 
 
@@ -223,18 +223,16 @@ def find_mismatches(listings, assessments):
 
 
 def main():
-    args = sys.argv[1:]
-    if len(args) and args[0] == "all":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("article", nargs="?", help="Article to parse", default=default_article)
+    parser.add_argument("-s", "--section", help="Index of section to parse", default=None)
+    args = parser.parse_args()
+
+    if args.article == "all":
         for article in all_articles:
             article_list_assessment_check(article)
     else:
-        article_title = default_article
-        section = None
-        if len(args):
-            article_title = args[0]
-            if len(args) > 1:
-                section = args[1]
-        article_list_assessment_check(article_title, section)
+        article_list_assessment_check(args.article, args.section)
 
 
 if __name__ == "__main__":
