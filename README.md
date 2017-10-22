@@ -12,13 +12,17 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 
 2. In your command line terminal, navigate to the folder containing this project and enter the command `python wpVitalsTender.py "Wikipedia:Vital articles"` to run the script on the [Vital articles](https://en.wikipedia.org/wiki/Wikipedia:Vital_articles) page.
 
-   * If you would like to limit your search to a single section to increase the speed of the script, you can add an optional section number to the end, like `python wpVitalsTender.py "Wikipedia:Vital articles" 3`, which will only search the (as of this writing) 132 articles of the People section.
-
 3. The script will print out any mismatches found, as well as any pages without assessments, such as pages not belonging to WikiProjects that do assessments (Classical Music is one such project).
+
+### Parameters
+* The first parameter passed is the name of the Vital Articles page you want to run the script on, in quotation marks.
+* The optional second parameter is the index of a section of the page you want to limit your query to. The index of a section is the number of headers which appear between it and the top of the page, including itself.
+* If you want to run the script against every page in the Vital Articles project, you can pass "all" as the first parameter. This can take quite a while to run.
 
 ## To-do
 * More graceful handling of multiple WikiProjects with different assessments, maybe printing a warning?
 * Check if delisted good articles and former featured articles are appropriately marked.
 * Expand test coverage
 * Option to export results to file (csv? txt?) with date
+* Include count checker for each page, section, and sub section
 * Maybe make a bot that automatically updates the listing? There may be too many edge cases, like articles that belong to only one WikiProject that doesn't do assessment (for example the Classical Music project)...

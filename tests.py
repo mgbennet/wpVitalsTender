@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import unittest
 import unittest.mock
 import wpVitalsTender as wpvt

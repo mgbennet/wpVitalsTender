@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 wpVitalsTender
 
@@ -192,7 +193,7 @@ def batch_query(request, article_titles, print_num_queries=False):
                 break
             last_continue = r["continue"]
     if print_num_queries:
-        print(num_queries)
+        print("Number of calls to complete batch querey: ", num_queries)
     return results
 
 
@@ -224,11 +225,11 @@ def find_mismatches(listings, assessments):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("article", nargs="?", help="Article to parse", default=default_article)
+    parser.add_argument("article", nargs="?", help="Title of the article to parse", default=default_article)
     parser.add_argument("-s", "--section", help="Index of section to parse", default=None)
     args = parser.parse_args()
 
-    if args.article == "all":
+    if args.article.lower() == "all":
         for article in all_articles:
             article_list_assessment_check(article)
     else:

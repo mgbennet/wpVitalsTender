@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 Really quick script to build test data for multiple assessments
 """
