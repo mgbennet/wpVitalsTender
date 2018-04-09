@@ -144,20 +144,22 @@ class TestWpVitalsTender(unittest.TestCase):
             assessments = {
                 "Land": ["C"],
                 "Desert": ["GA", "B"],
-                "Sahara": ["B"],
+                "Sahara": ["B"],  # Actually GA
                 "Glacier": ["B"],
-                "Grand Canyon": ["Start", "stub", "C"],  # Actually B
-                "Mountain": ["Start", "B", "C"],
-                "Alps (mountains)": ["c", "c", "c", "Start"],
+                "Grand Canyon": ["Start", "stub", "B"],  # B, but not accurate enough
+                "Mountain": ["Start", "c", "C"],
+                "Alps (mountains)": ["c", "c", "b", "Start"],
                 "Andes": ["Start"],
                 "Himalayas": ["B"],  # Actually C
                 "Mount Everest": ["Start"],
                 "Rocky Mountains": ["B"],
             }
-            results = wpvt.find_mismatches(listings, assessments)
+            results = wpvt.find_mismatches(listings, assessments, .5)
 
+            self.assertEqual(len(results), 4)
             self.assertIn({"title": "Forest", "listed_as": "B", "current": None}, results)
-            self.assertIn({"title": "Grand Canyon", "listed_as": "B", "current": ["Start", "stub", "C"]}, results)
+            self.assertIn({"title": "Sahara", "listed_as": "ga", "current": ["B"]}, results)
+            self.assertIn({"title": "Grand Canyon", "listed_as": "B", "current": ["Start", "stub", "B"]}, results)
             self.assertIn({"title": "Himalayas", "listed_as": "C", "current": ["B"]}, results)
 
 
