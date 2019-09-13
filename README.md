@@ -15,7 +15,7 @@ Don't run this script all willy-nilly! It makes an API call to the Wikipedia ser
 3. The script will print out any mismatches found, as well as any pages without assessments, such as pages not belonging to WikiProjects that do assessments (Classical Music is one such project).
 
 ### Parameters
-* The first parameter passed is the name of the Vital Articles page you want to run the script on, in quotation marks.
+* The first parameter passed is the name of the Vital Articles page you want to run the script on, in quotation marks. You can run this against multiple articles at the same time, simply list each article one after another, always in quotes.
 * If you want to run the script against every page in the Vital Articles project, you can pass "all" as the first parameter. This can take quite a while to run.
 * -s: Index of the section you want to run the script against. You can run the script on a single section to increase the speed of the query. The section's index is the number of headers between it and the top of the page.
 * -a: Accuracy, from 0 to 1. Sometimes an article has different assessments from different projects. If you run wpVitalsTender with an accuracy rating, the script will calculate the percentage of projects rating the article at the listed rating, and mark the article as a mismatch if that percentage is less than the accuracy. For example, if an article listed as "B" is ranked "B" by two projects and "C" by another, it will be printed out as a mismatch if the project is run with an accuracy rating of .66 or higher, but will not be counted as a mismatch with a lower accuracy rating. Projects which have no assessment are ignored.

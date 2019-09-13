@@ -22,17 +22,17 @@ all_articles = [
     "Wikipedia:Vital articles/Level/1",
     "Wikipedia:Vital articles/Level/2",
     "Wikipedia:Vital articles",
-    "Wikipedia:Vital articles/Expanded/People",
-    "Wikipedia:Vital articles/Expanded/History",
-    "Wikipedia:Vital articles/Expanded/Geography",
-    "Wikipedia:Vital articles/Expanded/Arts",
-    "Wikipedia:Vital articles/Expanded/Philosophy and religion",
-    "Wikipedia:Vital articles/Expanded/Everyday life",
-    "Wikipedia:Vital articles/Expanded/Society and social sciences",
-    "Wikipedia:Vital articles/Expanded/Biology and health sciences",
-    "Wikipedia:Vital articles/Expanded/Physical sciences",
-    "Wikipedia:Vital articles/Expanded/Technology",
-    "Wikipedia:Vital articles/Expanded/Mathematics"
+    "Wikipedia:Vital articles/Level/4/People",
+    "Wikipedia:Vital articles/Level/4/History",
+    "Wikipedia:Vital articles/Level/4/Geography",
+    "Wikipedia:Vital articles/Level/4/Arts",
+    "Wikipedia:Vital articles/Level/4/Philosophy and religion",
+    "Wikipedia:Vital articles/Level/4/Everyday life",
+    "Wikipedia:Vital articles/Level/4/Society and social sciences",
+    "Wikipedia:Vital articles/Level/4/Biology and health sciences",
+    "Wikipedia:Vital articles/Level/4/Physical sciences",
+    "Wikipedia:Vital articles/Level/4/Technology",
+    "Wikipedia:Vital articles/Level/4/Mathematics"
 ]
 
 
@@ -231,16 +231,17 @@ def find_mismatches(listings, assessments, accuracy=.01):
 
 def main():
     parser = argparse.ArgumentParser(description="Find mismatches between listed and actual wikipedia article ratings.")
-    parser.add_argument("article", nargs="?", help="Title of the article to parse", default=default_article)
+    parser.add_argument("articles", nargs="*", help="Title of the article to parse", default=default_article)
     parser.add_argument("-s", "--section", help="Index of section to parse", default=None)
     parser.add_argument("-a", "--accuracy", help="Ratio of listings required of match", type=float, default=0.01)
     args = parser.parse_args()
 
-    if args.article.lower() == "all":
+    if args.articles[0].lower() == "all":
         for article in all_articles:
             article_list_assessment_check(article, accuracy=args.accuracy)
     else:
-        article_list_assessment_check(args.article, args.section, args.accuracy)
+        for article in args.articles:
+            article_list_assessment_check(article, section=args.section, accuracy=args.accuracy)
 
 
 if __name__ == "__main__":
