@@ -61,18 +61,21 @@ class TestWpVitalsTender(unittest.TestCase):
             test_content = article_file.read()
             result = wpvt.parse_article(test_content)
 
-            self.assertEqual(len(result), 12)
+            self.assertEqual(len(result), 13)
             self.assertEqual("Land", result[0]["title"])
-            self.assertEqual("Glacier", result[4]["title"])
-            self.assertEqual("Rocky Mountains", result[11]["title"])
             self.assertEqual("C", result[0]["assessment"])
+            self.assertEqual("Desert", result[1]["title"])
             self.assertEqual("GA", result[1]["assessment"])
+            self.assertEqual("Glacier", result[4]["title"])
             self.assertEqual("B", result[4]["assessment"])
-            self.assertEqual("start", result[10]["assessment"])
-            self.assertEqual("B", result[11]["assessment"])
             self.assertEqual("DGA", result[4]["history"])
+            self.assertEqual("start", result[10]["assessment"])
             self.assertEqual(None, result[10]["history"])
-            self.assertEqual("DGA", result[11]["history"])
+            self.assertEqual("E (mathematical constant)", result[11]["title"])
+            self.assertEqual("FA", result[11]["assessment"])
+            self.assertEqual(None, result[11]["history"])
+            self.assertEqual("B", result[12]["assessment"])
+            self.assertEqual("DGA", result[12]["history"])
 
     @unittest.mock.patch('requests.get', side_effect=mock_requests_get)
     def test_find_redirects(self, mock_get):
@@ -152,6 +155,7 @@ class TestWpVitalsTender(unittest.TestCase):
                 "Andes": ["Start"],
                 "Himalayas": ["B"],  # Actually C
                 "Mount Everest": ["Start"],
+                "E (mathematical constant)": ["FA"],
                 "Rocky Mountains": ["B"],
             }
             results = wpvt.find_mismatches(listings, assessments, .5)

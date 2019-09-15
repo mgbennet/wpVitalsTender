@@ -102,7 +102,7 @@ def parse_article(content):
         (?P<assessment>\{\{[Ii]con\|\w+\}\})            # assessment should always be first
         (?P<history>\s*\{\{[Ii]con\|\w+\}\})*           # option of multiple icons for FFA, or DGA
         \s*
-        \'*\[\[(?P<title>[^#<>\[\]{\}]+)\]\]            # actual title is a wikilink
+        \'*\[\[(?P<title>[^#<>\[\]]+)\]\]               # actual title is a wikilink
     ''', re.VERBOSE)
     results = []
     for l in article_listing_regex.finditer(content):
@@ -231,7 +231,7 @@ def find_mismatches(listings, assessments, accuracy=.01):
 
 def main():
     parser = argparse.ArgumentParser(description="Find mismatches between listed and actual wikipedia article ratings.")
-    parser.add_argument("articles", nargs="*", help="Title of the article to parse", default=default_article)
+    parser.add_argument("articles", nargs="*", help="Title of the article to parse", default=[default_article])
     parser.add_argument("-s", "--section", help="Index of section to parse", default=None)
     parser.add_argument("-a", "--accuracy", help="Ratio of listings required of match", type=float, default=0.01)
     args = parser.parse_args()
